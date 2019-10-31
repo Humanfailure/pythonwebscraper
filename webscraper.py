@@ -44,8 +44,6 @@ def yaml_loader(users_yaml_file):
             user_init.main()
         else:
             exit()
-
-
 def run_threaded(user_dict_name):
     job_thread = threading.Thread(None, time_delay, args=(user_dict_name,))
     job_thread.start()
@@ -56,13 +54,11 @@ def time_delay(user_dict_name):
         user_functions, user_dict_name
     )
 
-
 def user_functions(user_dict_name):
 
     if check_changes(user_dict_name):
         return schedule.CancelJob
     print(user_dict_name)
-
 
 def check_changes(user_dict_name):
     repeat_num = yaml_data[user_dict_name]["repeat_num"]
@@ -84,12 +80,10 @@ def check_changes(user_dict_name):
     if text != old_text:
         messager(user_dict_name, "Changed! It changed from: " + old_text + "to" + text)
 
-
 def get_site(user_dict_name):
     req = requests.get(yaml_data[user_dict_name]["url"])
     soup = BeautifulSoup(req.content, "html.parser")
     return soup
-
 
 def messager(user_dict_name, message):
     twilio_sid = yaml_data[user_dict_name]["twilio_sid"]
@@ -101,7 +95,6 @@ def messager(user_dict_name, message):
     message = client.messages.create(body=message, from_=twilio_phone, to=user_phone)
     print(time.asctime())
     print(message.sid)
-
 
 if __name__ == "__main__":
     main()
